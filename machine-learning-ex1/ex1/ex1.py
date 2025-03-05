@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from matplotlib.colors import LogNorm
 from mpl_toolkits.mplot3d import axes3d, Axes3D
 from computeCost import *
@@ -8,14 +9,30 @@ from plotData import *
 
 # ===================== Part 1: Plotting =====================
 print('Plotting Data...')
-data = np.loadtxt('ex1data1.txt', delimiter=',', usecols=(0, 1))
-X = data[:, 0]
-y = data[:, 1]
+
+# using pandas instead of numpy for data loading bcause it's more fun
+data = pd.read_csv('/home/husseinbitambuka/Dev/cs229-assignments/machine-learning-ex1/ex1/ex1data1.txt', delimiter = ",", names = ["population","profit"])
+print(f"data size is: {data.size}")
+
+print(data.head())
+X = data["population"].to_numpy()
+y = data["profit"].to_numpy()
+
+#
+# p
+# int(f"the y data looks like this: {y[:5]}")
 m = y.size
 
-plt.ion()
-plt.figure(0)
-plot_data(X, y)
+
+fig, ax = plt.subplots()
+ax.scatter(X, y)
+plt.show()
+#theta = np.zeros(2)  # initialize fitting parameters
+#print('Initial cost : ' + str(compute_cost(X, y, theta)) + ' (This value should be about 32.07)')
+
+
+
+
 
 input('Program paused. Press ENTER to continue')
 

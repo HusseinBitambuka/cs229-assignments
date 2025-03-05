@@ -22,7 +22,7 @@ num_labels = 10         # 10 labels, from 0 to 9
 # Load Training Data
 print('Loading and Visualizing Data ...')
 
-data = scio.loadmat('ex3data1.mat')
+data = scio.loadmat('/home/husseinbitambuka/Dev/cs229-assignments/machine-learning-ex3/ex3/ex3data1.mat')
 X = data['X']
 y = data['y'].flatten()
 m = y.size
