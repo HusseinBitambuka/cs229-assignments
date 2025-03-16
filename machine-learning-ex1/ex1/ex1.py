@@ -1,21 +1,33 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from matplotlib.colors import LogNorm
 from mpl_toolkits.mplot3d import axes3d, Axes3D
 from computeCost import *
 from gradientDescent import *
 from plotData import *
+import pandas as pd
 
 # ===================== Part 1: Plotting =====================
 print('Plotting Data...')
-data = np.loadtxt('ex1data1.txt', delimiter=',', usecols=(0, 1))
-X = data[:, 0]
-y = data[:, 1]
-m = y.size
 
-plt.ion()
-plt.figure(0)
-plot_data(X, y)
+# using pandas instead of numpy for data loading bcause it's more fun
+data = pd.read_csv('/home/husseinbitambuka/Dev/cs229-assignments/machine-learning-ex1/ex1/ex1data1.txt', delimiter = ",", names = ["population","profit"])
+print(f"data size is: {data.size}")
+
+print(data.head())
+X = data["population"].to_numpy()
+y = data["profit"].to_numpy()
+
+m = len(X)
+
+
+
+# plotting the data
+
+plot_data(X,y)
+
+
 
 input('Program paused. Press ENTER to continue')
 
@@ -67,16 +79,30 @@ for i in range(0, theta0_vals.size):
         J_vals[i][j] = compute_cost(X, y, t)
 
 J_vals = np.transpose(J_vals)
+# Create the 3D surface plot
+fig1 = plt.figure(figsize=(10, 7))
+ax = fig1.add_subplot(111, projection='3d')
+ax.plot_surface(xs, ys, J_vals, cmap='viridis', edgecolor='none')
 
-fig1 = plt.figure(1)
-ax = fig1.gca(projection='3d')
-ax.plot_surface(xs, ys, J_vals)
+ax.set_xlabel(r'$\theta_0$')
+ax.set_ylabel(r'$\theta_1$')
+ax.set_zlabel(r'$J(\theta_0, \theta_1)$')
+ax.set_title('3D Surface Plot of $J(\\theta_0, \\theta_1)$')
+
+# Create the contour plot
+plt.figure(figsize=(8, 6))
+lvls = np.logspace(-2, 3, 20)
+contour = plt.contour(xs, ys, J_vals, levels=lvls, norm=LogNorm())
+plt.clabel(contour, inline=True, fontsize=8)
+
+# Plot the current values of theta on the contour plot
+plt.plot(theta[0], theta[1], 'r+', markersize=10, label="Theta values")
+
 plt.xlabel(r'$\theta_0$')
 plt.ylabel(r'$\theta_1$')
+plt.title('Contour Plot of $J(\\theta_0, \\theta_1)$')
+plt.legend()
 
-plt.figure(2)
-lvls = np.logspace(-2, 3, 20)
-plt.contour(xs, ys, J_vals, levels=lvls, norm=LogNorm())
-plt.plot(theta[0], theta[1], c='r', marker="x")
+plt.show()
 
 input('ex1 Finished. Press ENTER to exit')

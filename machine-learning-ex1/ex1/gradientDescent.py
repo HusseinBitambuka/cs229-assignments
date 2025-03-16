@@ -1,7 +1,7 @@
 import numpy as np
 from computeCost import *
 
-
+ 
 def gradient_descent(X, y, theta, alpha, num_iters):
     # Initialize some useful values
     m = y.size
@@ -12,6 +12,9 @@ def gradient_descent(X, y, theta, alpha, num_iters):
         # Instructions : Perform a single gradient step on the parameter vector theta
         #
         # Hint: X.shape = (97, 2), y.shape = (97, ), theta.shape = (2, )
+        hyp = np.dot(X, theta)
+        deriv = np.dot(X.T, (y - hyp)) / m
+        theta = theta + (alpha * deriv)
 
 
         # ===========================================================

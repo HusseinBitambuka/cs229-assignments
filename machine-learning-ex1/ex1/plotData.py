@@ -14,4 +14,9 @@ def plot_data(x, y):
 
     # ===========================================================
 
+    plt.scatter(x, y, color = 'red')
+    plt.xlabel("Populations of City in 1000s")
+    plt.ylabel("Profit in $10,000")
+    plt.title("scatter plot training example")
+
     plt.show()
