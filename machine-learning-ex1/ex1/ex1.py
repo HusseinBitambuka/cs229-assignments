@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import pandas as pd
 from matplotlib.colors import LogNorm
 from mpl_toolkits.mplot3d import axes3d, Axes3D
 from computeCost import *
